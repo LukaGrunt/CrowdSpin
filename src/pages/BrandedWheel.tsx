@@ -248,30 +248,6 @@ const BrandedWheel = () => {
   const secondaryColor = state.customization.secondaryColor;
   const textColor = state.customization.textColor || 'white';
   
-  const primaryTextColor = getContrastTextColor(primaryColor);
-  const secondaryTextColor = getContrastTextColor(secondaryColor);
-  
-  const primaryButtonStyle = {
-    backgroundColor: primaryColor,
-    color: primaryTextColor === 'black' ? '#000000' : '#FFFFFF',
-    textShadow: primaryTextColor === 'white' ? '0px 1px 2px rgba(0,0,0,0.5)' : 'none',
-    border: primaryTextColor === 'white' ? 'none' : '1px solid rgba(0,0,0,0.2)'
-  };
-  
-  const secondaryButtonStyle = {
-    backgroundColor: secondaryColor,
-    color: secondaryTextColor === 'black' ? '#000000' : '#FFFFFF',
-    textShadow: secondaryTextColor === 'white' ? '0px 1px 2px rgba(0,0,0,0.5)' : 'none',
-    border: secondaryTextColor === 'white' ? 'none' : '1px solid rgba(0,0,0,0.2)'
-  };
-  
-  const outlineButtonStyle = {
-    borderColor: primaryColor,
-    color: textColor,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    textShadow: textColor === 'white' ? '0px 1px 2px rgba(0,0,0,0.3)' : 'none'
-  };
-  
   return (
     <div className="min-h-screen overflow-x-hidden px-4 pb-12">
       <div 
@@ -303,14 +279,14 @@ const BrandedWheel = () => {
           logoUrl={state.customization.logoUrl}
           showWheeledHeader={true}
           textColor={textColor === 'white' ? 'white' : 'black'}
+          additionalText={state.customization.additionalText}
         />
         
         <div className="flex justify-between mb-6">
           <Button 
             variant="outline" 
             onClick={goBack}
-            className="flex items-center gap-2"
-            style={outlineButtonStyle}
+            className="flex items-center gap-2 bg-white/10 backdrop-blur-md text-white border-white/20 hover:bg-white/20"
           >
             <ArrowLeft size={18} />
             Back
@@ -320,11 +296,7 @@ const BrandedWheel = () => {
             <Button 
               variant="outline"
               onClick={toggleRecording}
-              className={`flex items-center gap-2 ${isRecording ? 'bg-red-500/30' : ''}`}
-              style={{
-                ...outlineButtonStyle,
-                ...(isRecording ? { borderColor: '#ef4444', color: '#FFFFFF' } : {})
-              }}
+              className={`flex items-center gap-2 bg-white/10 backdrop-blur-md text-white border-white/20 hover:bg-white/20 ${isRecording ? 'bg-red-500/30' : ''}`}
             >
               {isRecording ? <Square size={18} /> : <Video size={18} />}
               {isRecording ? 'Stop Recording' : 'Record'}
@@ -333,8 +305,7 @@ const BrandedWheel = () => {
             <Button 
               variant="outline"
               onClick={toggleFullscreen}
-              className="flex items-center gap-2"
-              style={outlineButtonStyle}
+              className="flex items-center gap-2 bg-white/10 backdrop-blur-md text-white border-white/20 hover:bg-white/20"
             >
               {isFullscreen ? <Minimize size={18} /> : <Maximize size={18} />}
               {isFullscreen ? 'Exit' : 'Fullscreen'}
@@ -355,9 +326,8 @@ const BrandedWheel = () => {
             {winners.length > 1 && (
               <Button 
                 size="sm" 
-                className="mt-2 w-full"
+                className="mt-2 w-full bg-white/20 text-white hover:bg-white/30"
                 onClick={copyAllWinners}
-                style={secondaryButtonStyle}
               >
                 <Clipboard size={12} className="mr-1" />
                 Copy All
